@@ -16,6 +16,9 @@ const Navbar = () => {
   // Check if user is admin
   const [isAdminUser, setIsAdminUser] = useState(false);
   
+  // Mobile menu toggle state
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  
   useEffect(() => {
     const checkAdmin = async () => {
       if (isAuthenticated && user) {
@@ -40,32 +43,54 @@ const Navbar = () => {
   // Handle logout
   const handleLogout = () => {
     logout();
+    setIsMobileMenuOpen(false); // Close mobile menu on logout
+  };
+
+  // Toggle mobile menu
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  // Close mobile menu when clicking outside or on a link
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
   };
 
   return (
     <nav className="navbar">
       <div className="navbar-container">
         {/* Logo/Brand name */}
-        <Link to="/" className="navbar-logo">
+        <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
           🥬 GreenGo
         </Link>
 
+        {/* Mobile menu toggle button */}
+        <button 
+          className={`mobile-menu-toggle ${isMobileMenuOpen ? 'active' : ''}`}
+          onClick={toggleMobileMenu}
+          aria-label="Toggle menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
         {/* Navigation links and user section */}
-        <div className="navbar-right">
+        <div className={`navbar-right ${isMobileMenuOpen ? 'active' : ''}`}>
           {/* Navigation links */}
           <ul className="navbar-menu">
             <li className="navbar-item">
-              <Link to="/" className="navbar-link">
+              <Link to="/" className="navbar-link" onClick={closeMobileMenu}>
                 Home
               </Link>
             </li>
             <li className="navbar-item">
-              <Link to="/products" className="navbar-link">
+              <Link to="/products" className="navbar-link" onClick={closeMobileMenu}>
                 Products
               </Link>
             </li>
             <li className="navbar-item">
-              <Link to="/cart" className="navbar-link">
+              <Link to="/cart" className="navbar-link" onClick={closeMobileMenu}>
                 Cart
                 {/* Show cart count badge if items exist */}
                 {cartCount > 0 && (
@@ -76,12 +101,12 @@ const Navbar = () => {
             {isAuthenticated && (
               <>
                 <li className="navbar-item">
-                  <Link to="/account" className="navbar-link">
+                  <Link to="/account" className="navbar-link" onClick={closeMobileMenu}>
                     Account
                   </Link>
                 </li>
                 <li className="navbar-item">
-                  <Link to="/support" className="navbar-link">
+                  <Link to="/support" className="navbar-link" onClick={closeMobileMenu}>
                     Support
                   </Link>
                 </li>
@@ -89,7 +114,7 @@ const Navbar = () => {
             )}
             {isAdminUser && (
               <li className="navbar-item">
-                <Link to="/admin" className="navbar-link admin-link">
+                <Link to="/admin" className="navbar-link admin-link" onClick={closeMobileMenu}>
                   Admin
                 </Link>
               </li>
@@ -105,10 +130,10 @@ const Navbar = () => {
             </div>
           ) : (
             <div className="navbar-auth">
-              <Link to="/login" className="auth-link-btn">
+              <Link to="/login" className="auth-link-btn" onClick={closeMobileMenu}>
                 Login
               </Link>
-              <Link to="/register" className="auth-link-btn register-btn">
+              <Link to="/register" className="auth-link-btn register-btn" onClick={closeMobileMenu}>
                 Register
               </Link>
             </div>
