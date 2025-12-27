@@ -141,6 +141,42 @@
   background-color: rgba(255, 255, 255, 0.3);
 }
 
+/* Mobile controls container - wraps cart icon and hamburger */
+.mobile-controls {
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Mobile cart icon - visible next to hamburger when cart has items */
+.mobile-cart-icon {
+  display: none;
+  position: relative;
+  color: white;
+  font-size: 1.5rem;
+  text-decoration: none;
+  padding: 0.5rem;
+  z-index: 1001;
+}
+
+.mobile-cart-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #ff5722;
+  color: white;
+  border-radius: 50%;
+  padding: 0.15rem 0.4rem;
+  font-size: 0.7rem;
+  font-weight: bold;
+  min-width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulse 2s infinite;
+}
+
 /* Mobile menu toggle button (hamburger) */
 .mobile-menu-toggle {
   display: none;
@@ -173,6 +209,11 @@
   transform: rotate(-45deg) translate(7px, -7px);
 }
 
+/* Ensure cart link is always visible on desktop */
+.navbar-item.cart-mobile-hidden {
+  display: list-item;
+}
+
 /* Responsive design for mobile */
 @media (max-width: 768px) {
   .navbar-container {
@@ -182,6 +223,18 @@
 
   .navbar-logo {
     font-size: 1.2rem;
+  }
+
+  /* Show mobile controls container on mobile */
+  .mobile-controls {
+    display: flex;
+  }
+
+  /* Show mobile cart icon on mobile when cart has items */
+  .mobile-cart-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   /* Show hamburger menu button on mobile */
@@ -223,6 +276,11 @@
   .navbar-item {
     width: 100%;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Hide cart link on mobile when cart is empty */
+  .navbar-item.cart-mobile-hidden {
+    display: none;
   }
 
   .navbar-link {

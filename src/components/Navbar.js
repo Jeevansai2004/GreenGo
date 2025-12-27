@@ -64,16 +64,32 @@ const Navbar = () => {
           🥬 GreenGo
         </Link>
 
-        {/* Mobile menu toggle button */}
-        <button 
-          className={`mobile-menu-toggle ${isMobileMenuOpen ? 'active' : ''}`}
-          onClick={toggleMobileMenu}
-          aria-label="Toggle menu"
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
+        {/* Mobile controls - cart icon and hamburger */}
+        <div className="mobile-controls">
+          {/* Mobile cart icon - visible next to hamburger when cart has items */}
+          {cartCount > 0 && (
+            <Link 
+              to="/cart" 
+              className="mobile-cart-icon" 
+              onClick={closeMobileMenu}
+              aria-label="Cart"
+            >
+              🛒
+              <span className="mobile-cart-badge">{cartCount}</span>
+            </Link>
+          )}
+
+          {/* Mobile menu toggle button */}
+          <button 
+            className={`mobile-menu-toggle ${isMobileMenuOpen ? 'active' : ''}`}
+            onClick={toggleMobileMenu}
+            aria-label="Toggle menu"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
 
         {/* Navigation links and user section */}
         <div className={`navbar-right ${isMobileMenuOpen ? 'active' : ''}`}>
@@ -89,16 +105,16 @@ const Navbar = () => {
                 Products
               </Link>
             </li>
-            {/* Only show cart link if cart has items */}
-            {cartCount > 0 && (
-              <li className="navbar-item">
-                <Link to="/cart" className="navbar-link" onClick={closeMobileMenu}>
-                  Cart
-                  {/* Show cart count badge */}
+            {/* Cart link - always visible on desktop, conditionally visible on mobile */}
+            <li className={`navbar-item ${cartCount === 0 ? 'cart-mobile-hidden' : ''}`}>
+              <Link to="/cart" className="navbar-link" onClick={closeMobileMenu}>
+                Cart
+                {/* Show cart count badge if items exist */}
+                {cartCount > 0 && (
                   <span className="cart-badge">{cartCount}</span>
-                </Link>
-              </li>
-            )}
+                )}
+              </Link>
+            </li>
             {isAuthenticated && (
               <>
                 <li className="navbar-item">
