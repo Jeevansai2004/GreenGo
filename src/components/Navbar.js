@@ -89,15 +89,16 @@ const Navbar = () => {
                 Products
               </Link>
             </li>
-            <li className="navbar-item">
-              <Link to="/cart" className="navbar-link" onClick={closeMobileMenu}>
-                Cart
-                {/* Show cart count badge if items exist */}
-                {cartCount > 0 && (
+            {/* Only show cart link if cart has items */}
+            {cartCount > 0 && (
+              <li className="navbar-item">
+                <Link to="/cart" className="navbar-link" onClick={closeMobileMenu}>
+                  Cart
+                  {/* Show cart count badge */}
                   <span className="cart-badge">{cartCount}</span>
-                )}
-              </Link>
-            </li>
+                </Link>
+              </li>
+            )}
             {isAuthenticated && (
               <>
                 <li className="navbar-item">
